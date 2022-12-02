@@ -9,10 +9,11 @@ days! {day1}
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {
+    /// Config path
+    #[arg(short, long)]
+    config: PathBuf,
     /// Days to run (defaults to last)
     days: Option<Vec<u32>>,
-    /// Config path
-    config: PathBuf,
 }
 pub struct Solution {
     pub first: String,
