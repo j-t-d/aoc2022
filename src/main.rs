@@ -20,7 +20,7 @@ pub struct Solution {
     pub second: String,
 }
 
-fn run_method(input: &Input, day: usize, days: &Vec<fn(&str) -> Result<Solution>>) -> Result<()> {
+fn run_method(input: &Input, day: usize, days: &[fn(&str) -> Result<Solution>]) -> Result<()> {
     if let Some(method) = days.get(day - 1) {
         let input = input.get(day as u8)?;
         let now = Instant::now();
@@ -55,11 +55,7 @@ macro_rules! days {
         )+
 
         fn days() -> Vec<fn(&str) ->  Result<Solution>> {
-            let mut rtn: Vec<fn(&str) -> Result<Solution>> = Vec::new();
-            $(
-                rtn.push($day::solve);
-            )+
-            rtn
+            vec![$($day::solve,)+]
         }
     };
 }

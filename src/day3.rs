@@ -31,17 +31,17 @@ fn priority(item: char) -> i32 {
     }
 }
 
-fn part1(rucksacks: &Vec<Rucksack>) -> Result<i32> {
+fn part1(rucksacks: &[Rucksack]) -> Result<i32> {
     rucksacks.iter().try_fold(0, |acc, sack| Ok(acc + priority(sack.mispacked()?)))
 }
 
-fn part2(rucksacks: &Vec<Rucksack>) -> Result<i32> {
+fn part2(rucksacks: &[Rucksack]) -> Result<i32> {
     if rucksacks.len() % 3 != 0 {
         bail!("Expected groups of 3");
     }
     rucksacks.chunks(3).try_fold(0, |acc, chunk| {
-        let first_intersection = chunk[0].all.intersection(&chunk[1].all).map(|item| *item).collect::<HashSet<_>>();
-        let second_intersection = first_intersection.intersection(&chunk[2].all).map(|item| *item).collect::<Vec<_>>();
+        let first_intersection = chunk[0].all.intersection(&chunk[1].all).copied().collect::<HashSet<_>>();
+        let second_intersection = first_intersection.intersection(&chunk[2].all).copied().collect::<Vec<_>>();
         if second_intersection.len() != 1 {
             bail!("Expected 1 intersection in group")
         }

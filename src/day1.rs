@@ -25,11 +25,11 @@ fn parse(input: &str) -> Result<Vec<Elf>> {
     Ok(elves)
 }
 
-fn part1(elves: &Vec<Elf>) -> Result<isize> {
+fn part1(elves: &[Elf]) -> Result<isize> {
     Ok(elves.last().ok_or_else(|| eyre!("No max elf"))?.sum)
 }
 
-fn part2(elves: &Vec<Elf>) -> Result<isize> {
+fn part2(elves: &[Elf]) -> Result<isize> {
     Ok(elves[elves.len() - 3..].iter().fold(0, |sum, elf| sum + elf.sum))
 }
 

@@ -88,11 +88,11 @@ struct Turn {
     action: Action,
 }
 
-fn part1(turns: &Vec<Turn>) -> i32 {
+fn part1(turns: &[Turn]) -> i32 {
     turns.iter().fold(0, |acc, turn| acc + turn.me.value() + turn.me.round_score(&turn.opponent))
 }
 
-fn part2(turns: &Vec<Turn>) -> i32 {
+fn part2(turns: &[Turn]) -> i32 {
     turns.iter().fold(0, |acc, turn| {
         let my_move = Move::from_action(&turn.action, &turn.opponent);
         acc + my_move.value() + my_move.round_score(&turn.opponent)

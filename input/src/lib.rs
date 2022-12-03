@@ -1,4 +1,3 @@
-use attohttpc;
 use config::builder::DefaultState;
 use config::{ConfigBuilder, File};
 use std::fs;
@@ -31,15 +30,15 @@ impl Input {
         let config = ConfigBuilder::<DefaultState>::default()
             .add_source(File::from(config.as_ref()))
             .build()
-            .map_err(|e| InputError::Configuration(e))?;
-        let cache_path = config.get_string("cache_path").map_err(|e| InputError::Configuration(e))?;
-        let url = config.get_string("url").map_err(|e| InputError::Configuration(e))?;
-        let session = config.get("session").map_err(|e| InputError::Configuration(e))?;
+            .map_err(InputError::Configuration)?;
+        let cache_path = config.get_string("cache_path").map_err(InputError::Configuration)?;
+        let url = config.get_string("url").map_err(InputError::Configuration)?;
+        let session = config.get("session").map_err(InputError::Configuration)?;
 
         Ok(Self {
             cache_path: PathBuf::from(cache_path),
             session,
-            url: Url::parse(&url).map_err(|e| InputError::ParseUrl(e))?,
+            url: Url::parse(&url).map_err(InputError::ParseUrl)?,
         })
     }
 
@@ -55,9 +54,9 @@ impl Input {
                 let input = attohttpc::get(new_url.as_str())
                     .header_append(attohttpc::header::COOKIE, format!("session={}", &self.session))
                     .send()
-                    .map_err(|e| InputError::HttpGet(e))?;
+                    .map_err(InputError::HttpGet)?;
                 if input.is_success() {
-                    let input = input.text().map_err(|e| InputError::HttpGet(e))?;
+                    let input = input.text().map_err(InputError::HttpGet)?;
                     fs::create_dir_all(&dir_path).map_err(|e| InputError::Caching {
                         source: e,
                         path: dir_path.to_string_lossy().to_string(),
