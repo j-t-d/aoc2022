@@ -5,12 +5,12 @@ use input::Input;
 use std::path::PathBuf;
 use std::time::Instant;
 
-days! {day1}
+days! {day1, day2}
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Config path
-    #[arg(short, long)]
+    #[arg(short, long, default_value = "config.toml")]
     config: PathBuf,
     /// Days to run (defaults to last)
     days: Option<Vec<u32>>,
