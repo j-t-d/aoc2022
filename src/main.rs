@@ -5,7 +5,7 @@ use input::Input;
 use std::path::PathBuf;
 use std::time::Instant;
 
-days! {day1, day2, day3, day4, day5, day6}
+days! {day1, day2, day3, day4, day5, day6, day7}
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {

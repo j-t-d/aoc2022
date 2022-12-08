@@ -11,6 +11,7 @@ color-eyre = "0.5.11"
 clap = { version = "4.0.29", features = ["derive"]}
 ahash = "0.8.2"
 regex = "1"
+ego-tree = "0.6.2"
 
 [workspace]
 members = [
